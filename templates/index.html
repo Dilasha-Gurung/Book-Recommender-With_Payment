@@ -1,0 +1,298 @@
+<!-- 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Top 50 Books</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            margin: 0;
+            padding-top: 70px;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .book-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 0;
+            list-style: none;
+        }
+
+        .book-item {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 300px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .book-item:hover {
+            transform: scale(1.02);
+        }
+
+        .book-content {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         width: 100%;
+        }
+
+        .book-item img {
+            width: 150px;
+            height: 220px;
+            object-fit: contain;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 5px;
+            color: #222;
+        }
+
+        .author, .genres, .rating {
+            font-size: 0.9rem;
+            color: #555;
+            margin: 3px 0;
+            text-align: center;
+        }
+
+        .desc {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 10px;
+            text-align: justify;
+            max-height: 80px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+  
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/recommend">Get Recommendation</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    </div>
+
+    <h1>Top 50 Books</h1>
+
+    <ul class="book-list">
+        {% for i in range(book_name|length) %}
+        
+        <li class="book-item">
+    <img src="{{ image[i] }}" alt="Cover of {{ book_name[i] }}">
+    <div class="book-content">
+        <div class="title">{{ book_name[i] }}</div>
+        <div class="author">by {{ author[i] }}</div>
+        <div class="genres">{{ genres[i] }}</div>
+        <div class="rating">Rating: {{ rating[i] }}</div>
+        <div class="desc">{{ book_desc[i] }}</div>
+    </div>
+</li>
+
+        {% endfor %}
+    </ul>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Top 50 Books</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            margin: 0;
+            padding-top: 70px;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .book-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 0;
+            list-style: none;
+        }
+
+        .book-item {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 300px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s;
+            overflow: hidden; /* Ensure content stays inside */
+        }
+
+        .book-item:hover {
+            transform: scale(1.02);
+        }
+
+        .book-item img {
+            width: 150px;
+            height: 220px;
+            object-fit: contain;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .book-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+            max-height: 200px; /* Limit content height */
+            overflow: hidden; /* Prevent overflow */
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #222;
+        }
+
+        .author, .genres, .rating {
+            font-size: 0.9rem;
+            color: #555;
+            margin: 3px 0;
+        }
+
+        .genres {
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; /* Truncate long genres */
+        }
+
+        .desc {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 10px;
+            text-align: justify;
+            max-height: 80px;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis; /* Optional: truncate description */
+        }
+
+        @media (max-width: 600px) {
+            .book-item {
+                max-width: 100%;
+                width: 90%;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/recommend">Get Recommendation</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    </div>
+
+    <h1>Top 50 Books</h1>
+
+    <ul class="book-list">
+        {% for i in range(book_name|length) %}
+        <li class="book-item">
+            <img src="{{ image[i] }}" alt="Cover of {{ book_name[i] }}">
+            <div class="book-content">
+                <div class="title">{{ book_name[i] }}</div>
+                <div class="author">by {{ author[i] }}</div>
+                <div class="genres">{{ genres[i] }}</div>
+                <div class="rating">Rating: {{ rating[i] }}</div>
+                <div class="desc">{{ book_desc[i] }}</div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
