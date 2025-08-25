@@ -1,0 +1,346 @@
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Library</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            margin: 0;
+            padding-top: 70px;
+        }
+        .navbar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .flash-messages {
+            text-align: center;
+            margin: 10px;
+        }
+        .flash-messages p {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .flash-messages .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .flash-messages .error {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+        .flash-messages .warning {
+            background-color: #fcf8e3;
+            color: #8a6d3b;
+        }
+        .book-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 0;
+            list-style: none;
+        }
+        .book-item {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 300px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        .book-item:hover {
+            transform: scale(1.02);
+        }
+        .book-item img {
+            width: 150px;
+            height: 220px;
+            object-fit: contain;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 5px;
+            color: #222;
+        }
+        .author {
+            font-size: 0.9rem;
+            color: #555;
+            margin: 3px 0;
+            text-align: center;
+        }
+        .price {
+            font-size: 0.9rem;
+            color: #555;
+            margin: 3px 0;
+            text-align: center;
+        }
+        .read-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            background-color: #2196F3;
+        }
+        .read-btn:hover {
+            background-color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/user">Home</a>
+        <a href="/user/recommend">Get Recommendation</a>
+        <a href="{{ url_for('my_library') }}">My Library</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <h1>My Library</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        <p class="{{ category }}">{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    {% if books %}
+    <ul class="book-list">
+        {% for book in books %}
+        {% if book %}
+        <li class="book-item">
+            <img src="{{ book.image or 'https://via.placeholder.com/150' }}" alt="Cover of {{ book.title }}">
+            <div class="title">{{ book.title }}</div>
+            <div class="author">by {{ book.author }}</div>
+            <div class="price">Price: ${{ '%0.2f' % book.price }}</div>
+            <a href="{{ url_for('static', filename='uploads/' + book.title + '.pdf') }}" class="read-btn" target="_blank">Click to Read</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p style="text-align: center; color: #666;">No books purchased yet.</p>
+    {% endif %}
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Library</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            margin: 0;
+            padding-top: 70px;
+        }
+        .navbar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .flash-messages {
+            text-align: center;
+            margin: 10px;
+        }
+        .flash-messages p {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .flash-messages .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .flash-messages .error {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+        .flash-messages .warning {
+            background-color: #fcf8e3;
+            color: #8a6d3b;
+        }
+        .book-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 0;
+            list-style: none;
+        }
+        .book-item {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 320px; /* Set fixed width for consistency */
+            min-height: 350px; /* Set height for consistent card size */
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s;
+            overflow: hidden; /* Ensure content stays inside the card */
+        }
+        .book-item:hover {
+            transform: scale(1.02);
+        }
+        .book-item img {
+            width: 150px;
+            height: 220px;
+            object-fit: contain;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .book-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+            max-height: 100px; /* Limit text area height */
+            overflow: hidden; /* Prevent text overflow */
+        }
+        .title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #222;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis; /* Truncate long titles */
+        }
+        .author, .price {
+            font-size: 0.9rem;
+            color: #555;
+            margin: 3px 0;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis; /* Truncate long text */
+        }
+        .read-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            background-color: #2196F3;
+        }
+        .read-btn:hover {
+            background-color: #1976D2;
+        }
+        @media (max-width: 600px) {
+            .book-item {
+                width: 90%; /* Consistent size on smaller screens */
+                min-height: 330px; /* Slightly reduced for smaller screens */
+                margin: 0 auto;
+            }
+            .book-content {
+                max-height: 90px; /* Adjusted for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/user">Home</a>
+        <a href="/user/recommend">Get Recommendation</a>
+        <a href="{{ url_for('my_library') }}">My Library</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <h1>My Library</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        <p class="{{ category }}">{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    {% if books %}
+    <ul class="book-list">
+        {% for book in books %}
+        {% if book %}
+        <li class="book-item">
+            <img src="{{ book.image or 'https://via.placeholder.com/150' }}" alt="Cover of {{ book.title }}">
+            <div class="book-content">
+                <div class="title">{{ book.title }}</div>
+                <div class="author">by {{ book.author }}</div>
+                <div class="price">Price: ${{ '%0.2f' % book.price }}</div>
+            </div>
+            <a href="{{ url_for('static', filename='Uploads/' + book.title + '.pdf') }}" class="read-btn" target="_blank">Click to Read</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p style="text-align: center; color: #666;">No books purchased yet.</p>
+    {% endif %}
+</body>
+</html>
