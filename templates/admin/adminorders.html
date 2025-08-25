@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>All Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            margin: 0;
+            padding-top: 70px;
+        }
+        .navbar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .flash-messages {
+            text-align: center;
+            margin: 10px;
+        }
+        .flash-messages p {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .flash-messages .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .flash-messages .error {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+        .flash-messages .warning {
+            background-color: #fcf8e3;
+            color: #8a6d3b;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+            width: 90%;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        table th, table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .no-orders {
+            text-align: center;
+            color: #666;
+            margin-top: 20px;
+        }
+        .back-link {
+            display: inline-block;
+            margin: 15px auto;
+            padding: 8px 15px;
+            background-color: #2196F3;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            background-color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/admin">Home</a>
+        <a href="/admin/recommend">Get Recommendation</a>
+        <a href="/admin/addbook">Add Book</a>
+        <a href="/admin/updatebook">Update Book</a>
+        <a href="/admin/deletebook">Delete Book</a>
+        <a href="/admin/addpdf">Add PDF</a>
+        <a href="/admin/pdfs">Update PDF</a>
+        <a href="/admin/users">Users</a>
+        <a href="/admin/orders">User Orders</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <h1>All Orders</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        <p class="{{ category }}">{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <table>
+        <tr>
+            <th>Order ID</th>
+            <th>PayPal Order ID</th>
+            <th>Username</th>
+            <th>Book Title</th>
+            <th>Purchase Date</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.order_id }}</td>
+            <td>{{ order.paypal_order_id }}</td>
+            <td>{{ order.username }}</td>
+            <td>{{ order.book_title }}</td>
+            <td>{{ order.purchase_date }}</td>
+        </tr>
+        {% endfor %}
+        {% if not orders %}
+        <tr>
+            <td colspan="5" class="no-orders">No orders yet.</td>
+        </tr>
+        {% endif %}
+    </table>
+</body>
+</html>

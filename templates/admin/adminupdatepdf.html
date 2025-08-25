@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Update PDF</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      margin: 0;
+      padding-top: 70px; /* space for fixed navbar */
+      font-family: Arial, sans-serif;
+    }
+    h3 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+      font-weight: bold;
+    }
+    .card {
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      color: #fff;
+    }
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background-color: #0056b3;
+      border-color: #004085;
+    }
+    .btn-secondary {
+      background-color: #6c757d;
+      border-color: #6c757d;
+      color: #fff;
+    }
+    .btn-secondary:hover,
+    .btn-secondary:focus {
+      background-color: #545b62;
+      border-color: #4e555b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Update PDF Form -->
+  <div class="container py-5">
+    <h3>Update PDF</h3>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card p-4">
+
+          <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label class="form-label">Book Name:</label>
+              <input 
+                type="text" 
+                name="book_name" 
+                class="form-control" 
+                value="{{ file.book_name }}" 
+                required 
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Author:</label>
+              <input 
+                type="text" 
+                name="author" 
+                class="form-control" 
+                value="{{ file.author }}" 
+                required 
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Replace PDF (optional):</label>
+              <input 
+                type="file" 
+                name="pdf" 
+                class="form-control" 
+                accept=".pdf" 
+              />
+            </div>
+
+            <div class="text-end">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Update
+              </button>
+              <a href="{{ url_for('list_pdfs') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back
+              </a>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+          crossorigin="anonymous"></script>
+</body>
+</html>

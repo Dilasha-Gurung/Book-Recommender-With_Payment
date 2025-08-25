@@ -1,0 +1,170 @@
+<!-- correct -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Book</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            margin: 0;
+            padding-top: 70px;
+        }
+
+        .navbar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .flash-messages {
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .flash-messages div {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .flash-messages .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+
+        .flash-messages .warning {
+            background-color: #fcf8e3;
+            color: #8a6d3b;
+        }
+
+        .flash-messages .error {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+    </style>
+    <script>
+        function fetchBookData() {
+            var title = document.getElementById('old_book_title').value;
+            if (title) {
+                window.location.href = '/admin/updatebook?old_book_title=' + encodeURIComponent(title);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/admin">Home</a>
+        <a href="/admin/recommend">Get Recommendation</a>
+        <a href="/admin/addbook">Add Book</a>
+        <a href="/admin/updatebook">Update Book</a>
+        <a href="/admin/deletebook">Delete Book</a>
+        <a href="/admin/addpdf">Add PDF</a>
+        <a href="/admin/pdfs">Update PDF</a>
+        <a href="/admin/users">Users</a>
+        <a href="/admin/orders">User Orders</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <h1>Update Book</h1>
+
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="form-container">
+        <form action="/admin/updatebook" method="post">
+            <label for="old_book_title">Enter Book Title to Update</label>
+            <input type="text" name="old_book_title" id="old_book_title" value="{% if selected_book %}{{ selected_book.title }}{% endif %}" onblur="fetchBookData()" required>
+
+            <label for="book_title">New Book Title</label>
+            <input type="text" name="book_title" value="{% if selected_book %}{{ selected_book.title }}{% endif %}">
+
+            <label for="book_authors">Author(s)</label>
+            <input type="text" name="book_authors" value="{% if selected_book %}{{ selected_book.author }}{% endif %}">
+
+            <label for="book_rating">Rating (Optional)</label>
+            <input type="number" name="book_rating" step="0.1" min="0" max="5" value="{% if selected_book and selected_book.rating is not none %}{{ selected_book.rating }}{% endif %}">
+
+            <label for="genres">Genres</label>
+            <input type="text" name="genres" value="{% if selected_book %}{{ selected_book.genres }}{% endif %}">
+
+            <label for="book_desc">Description</label>
+            <textarea name="book_desc" rows="5">{% if selected_book %}{{ selected_book.description }}{% endif %}</textarea>
+
+            <label for="image_url">Image URL (Optional)</label>
+            <input type="text" name="image_url" value="{% if selected_book %}{{ selected_book.image }}{% endif %}">
+
+            <label for="pdf_url">PDF URL (Optional)</label>
+            <input type="text" name="pdf_url" value="{% if selected_book %}{{ selected_book.pdf }}{% endif %}">
+
+            <button type="submit">Update Book</button>
+        </form>
+    </div>
+</body>
+</html>

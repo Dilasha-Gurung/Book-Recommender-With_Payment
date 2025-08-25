@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            margin: 0;
+            padding-top: 70px;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            margin: 20px auto;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+
+        .book-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .book {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            width: 260px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .book img {
+            width: 150px;
+            height: 220px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .title {
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .author, .genre, .rating {
+            font-size: 0.9em;
+            color: #555;
+            margin: 2px 0;
+        }
+
+        .desc {
+            font-size: 0.85em;
+            text-align: justify;
+            color: #333;
+            margin-top: 10px;
+        }
+        .click-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .click-btn:hover {
+            background-color: #ddd;
+        }
+        .click-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .click-btn:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="/admin">Home</a>
+        <a href="/admin/recommend">Get Recommendation</a>
+        <a href="/admin/addbook">Add Book</a>
+        <a href="/admin/updatebook">Update Book</a>
+        <a href="/admin/deletebook">Delete Book</a>
+        <a href="/admin/addpdf">Add PDF</a>
+        <a href="/admin/pdfs">Update PDF</a>
+        <a href="/admin/users">Users</a>
+        <a href="/admin/orders">User Orders</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <h1>Book Recommendation System</h1>
+
+    <form action="/admin/recommend" method="post">
+        <input type="text" name="book_title" placeholder="Enter book title" required>
+        <button type="submit">Get Recommendations</button>
+    </form>
+
+    {% if input_title %}
+        <h2>Recommendations for: "{{ input_title }}"</h2>
+    {% endif %}
+
+    <div class="book-grid">
+        {% for book in books %}
+        <div class="book">
+            <img src="{{ book.image_url }}" alt="Book Cover">
+            <div class="title">{{ book.book_title }}</div>
+            <div class="author">by {{ book.book_authors }}</div>
+            <div class="genre">{{ book.genres }}</div>
+            <div class="rating">Rating: {{ book.book_rating }}</div>
+            <div class="desc">{{ book.book_desc[:300] }}{% if book.book_desc|length > 300 %}...{% endif %}</div>
+             <!-- Back button -->
+            <!-- <a href="{{ url_for('static', filename='uploads/' + book.book_title + '.pdf') }}" class="click-btn" target="_blank">Click to Read</a> -->
+            <a href="{{ url_for('static', filename=('uploads/' + (book.book_title + '.pdf')|urlencode)) }}"  class="read-btn"  target="_blank">Click to Read</a>
+
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
